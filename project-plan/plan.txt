@@ -1,0 +1,130 @@
+Final Project Plan: BERT-Based Book Recommender System
+Goal: Build a smart, natural-language-powered book recommendation app using Sentence-BERT and deploy it on Streamlit Cloud (free tier).
+
+🟩 PHASE 1: DATA COLLECTION & ENRICHMENT
+🔹 Step 1: Download the Book Metadata
+Use the GoodBooks-10k dataset from Kaggle.
+
+Start with the books.csv file which contains book titles, authors, and ratings.
+
+This will serve as your base dataset — each row is a book to enrich.
+
+🔹 Step 2: Enrich the Dataset with Descriptions
+The original dataset does not include book descriptions, which are required for BERT embeddings.
+
+Use the Google Books API to fetch rich, human-readable descriptions:
+
+Query using book title and author.
+
+Extract the description field.
+
+For books with missing results, you may optionally query the Open Library API as a fallback.
+
+Store the final result in a new file (books_enriched.csv) with fields like:
+
+Title, author, description, average rating, genre/tags (if any).
+
+🟩 PHASE 2: TEXT EMBEDDING PREPARATION
+🔹 Step 3: Preprocess Descriptions
+Clean and normalize descriptions to remove unwanted characters or formatting.
+
+Filter out any books that still have no description (optional).
+
+🔹 Step 4: Generate Sentence-BERT Embeddings (Offline)
+Use a lightweight Sentence-BERT model such as all-MiniLM-L6-v2.
+
+Pass each book’s description into the model to generate a vector.
+
+Each book will now have a semantic vector representation (usually 384 dimensions).
+
+Save these embeddings to a file (e.g., .npy, .pkl, or .csv) and keep them linked to their book IDs or titles.
+
+🟩 PHASE 3: BUILDING THE WEB APP INTERFACE
+🔹 Step 5: Design the Streamlit UI
+Create a Streamlit interface with:
+
+A text input box where users can type what kind of book they want.
+
+A “Get Recommendations” button to trigger the engine.
+
+A display section to show recommended books (title, author, description, cover image if available).
+
+🔹 Step 6: Load Data in the Streamlit App
+At app startup:
+
+Load the books_enriched.csv file (metadata).
+
+Load the precomputed BERT embeddings into memory.
+
+(Optional) Cache them for performance.
+
+🟩 PHASE 4: REAL-TIME SEMANTIC SEARCH
+🔹 Step 7: Handle User Input at Runtime
+When the user enters a description:
+
+Embed it using the same Sentence-BERT model.
+
+Compare the user’s vector with all book vectors using cosine similarity.
+
+🔹 Step 8: Retrieve and Sort Recommendations
+Compute similarity scores for each book.
+
+Sort by highest similarity.
+
+Select and return the top N most relevant books (e.g., top 5 or 10).
+
+Display the results in a clean, easy-to-read format in Streamlit.
+
+🟩 PHASE 5: DEPLOYMENT
+🔹 Step 9: Prepare for Deployment
+Push your app code and all required files (excluding large model weights) to a GitHub repository.
+
+Include:
+
+app.py (main Streamlit app)
+
+Cleaned dataset (books_enriched.csv)
+
+Embedding file (book_vectors.pkl or similar)
+
+requirements.txt (Python libraries)
+
+🔹 Step 10: Deploy to Streamlit Cloud (Free Tier)
+Go to https://streamlit.io/cloud
+
+Connect your GitHub account and import your repo.
+
+Select app.py as the main file.
+
+Deploy the app — it will automatically install dependencies and launch.
+
+Share the public app link with others (perfect for your portfolio).
+
+🟩 PHASE 6: (Optional) POLISH & EXTENSIONS
+🔹 Step 11: Enhance the UX/UI
+Add cover images using the Google Books or Open Library API.
+
+Show genre tags or ratings.
+
+Display similarity scores visually (e.g., progress bars).
+
+Organize results in Streamlit columns for better layout.
+
+🔹 Step 12: Handle Edge Cases
+What if the user enters very vague or strange input?
+
+What if the embedding is too generic?
+
+You can add fallback logic:
+
+Show most popular books
+
+Prompt user to rephrase input
+
+🔹 Step 13: Final Touches
+Add a professional README with screenshots, features, and tech stack.
+
+Record a demo GIF or video for your portfolio.
+
+Share it on LinkedIn, GitHub, or a personal website.
+
