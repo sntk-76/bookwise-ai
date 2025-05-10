@@ -1,4 +1,3 @@
-```markdown
 # Bookwise-AI: A Semantic Book Recommendation System
 
 **Bookwise-AI** is a full-stack, natural language-driven book recommendation system. It enables users to describe the kind of book they're looking for using free-form text and provides personalized recommendations using Sentence-BERT embeddings. The application features a Streamlit frontend, modular data pipelines with Apache Airflow, and infrastructure provisioning via Terraform.
@@ -56,7 +55,6 @@ Access the deployed app: [Bookwise-AI on Streamlit Cloud](https://bookwise-ai-re
 ## Project Structure
 
 ```
-
 bookwise-ai/
 ├── airflow/                 # Airflow DAGs and logs
 │   ├── dags/                # Python upload DAGs
@@ -74,12 +72,11 @@ bookwise-ai/
 │   ├── Dockerfile           # Optional Dockerfile for local deployment
 │   ├── requirements.txt     # Python dependencies
 │   ├── embeddings.npy       # Precomputed embeddings
-│   ├── enriched\_data.csv    # Final enriched dataset
+│   ├── enriched_data.csv    # Final enriched dataset
 │   └── all-MiniLM-L6-v2/    # Local version of the embedding model
 ├── LICENSE
 └── README.md
-
-````
+```
 
 ---
 
@@ -90,7 +87,7 @@ bookwise-ai/
 ```bash
 git clone https://github.com/your-username/bookwise-ai.git
 cd bookwise-ai
-````
+```
 
 ### 2. Create a Virtual Environment and Install Dependencies
 
@@ -139,10 +136,10 @@ The Airflow DAGs automate the upload of data files to GCP or local storage.
 
 ### Available DAGs
 
-* `upload_raw_data`
-* `upload_cleaned_raw_data`
-* `upload_enriched_data`
-* `upload_embeddings`
+- `upload_raw_data`
+- `upload_cleaned_raw_data`
+- `upload_enriched_data`
+- `upload_embeddings`
 
 ### Run Airflow Locally
 
@@ -159,9 +156,9 @@ Visit `http://localhost:8080` to access the Airflow UI.
 
 The `infrastructure/` directory contains Terraform configuration to provision:
 
-* GCS buckets
-* Service accounts
-* IAM roles
+- GCS buckets
+- Service accounts
+- IAM roles
 
 ### Deploy with Terraform
 
@@ -177,11 +174,11 @@ Ensure you are authenticated with Google Cloud CLI before running Terraform.
 
 ## Optional Enhancements
 
-* Replace sklearn similarity with FAISS or Annoy for large-scale vector search.
-* Add genre and tag filters for better discovery.
-* Implement user sessions and personalization.
-* Integrate usage analytics and dashboarding.
-* Dockerize the app for local or containerized cloud deployment.
+- Replace sklearn similarity with FAISS or Annoy for large-scale vector search.
+- Add genre and tag filters for better discovery.
+- Implement user sessions and personalization.
+- Integrate usage analytics and dashboarding.
+- Dockerize the app for local or containerized cloud deployment.
 
 ---
 
@@ -193,11 +190,9 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
 
-* [GoodBooks-10K Dataset](https://www.kaggle.com/datasets/zygmunt/goodbooks-10k)
-* [Google Books API](https://developers.google.com/books)
-* [SentenceTransformers](https://www.sbert.net/)
-* [Streamlit](https://streamlit.io/)
-* [Apache Airflow](https://airflow.apache.org/)
-* [Terraform](https://www.terraform.io/)
-
-```
+- [GoodBooks-10K Dataset](https://www.kaggle.com/datasets/zygmunt/goodbooks-10k)
+- [Google Books API](https://developers.google.com/books)
+- [SentenceTransformers](https://www.sbert.net/)
+- [Streamlit](https://streamlit.io/)
+- [Apache Airflow](https://airflow.apache.org/)
+- [Terraform](https://www.terraform.io/)
