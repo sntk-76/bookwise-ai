@@ -175,6 +175,9 @@ cython_debug/
 # add all the csv files and all the json files to exception : 
 *.csv
 *.json
+
+# EXCEPTION: Keep this one CSV
+!streamlit/enriched_data.csv
 # add terraform unnecessary file to the .gitignore :
 
 .terraform/
