@@ -47,7 +47,7 @@ df, book_vectors = load_data()
 # --------------------------
 st.title("📚 Semantic Book Recommender")
 st.write(
-    "Provide a detailed description of the **roman** you're looking for, "
+    "Provide a detailed description of the **novel** you're looking for, "
     "and we'll use our AI engine powered by BERT to find the most relevant titles.\n\n"
     "**Sample:** _I want a heartbreaking love story that explores deep emotions and personal growth._"
 )
