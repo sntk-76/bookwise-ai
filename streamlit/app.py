@@ -6,7 +6,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import requests
 
 # --------------------------
 # Google Sheets logging setup
@@ -36,7 +35,6 @@ def load_model():
 def load_data():
     df = pd.read_csv("streamlit/enriched_data.csv")
     vectors = np.load("streamlit/embeddings.npy")
-
     return df, vectors
 
 model = load_model()
