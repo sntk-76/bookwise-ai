@@ -1,6 +1,8 @@
-# Bookwise-AI: A Semantic Book Recommendation System
+# A Semantic Book Recommendation System
 
 **Bookwise-AI** is a full-stack, natural language-driven book recommendation system. It enables users to describe the kind of book they're looking for using free-form text and provides personalized recommendations using Sentence-BERT embeddings. The application features a Streamlit frontend, modular data pipelines with Apache Airflow, and infrastructure provisioning via Terraform.
+
+![Project Cover](https://github.com/sntk-76/energy-forecast-pipeline/blob/main/project_plan/cover_photo.png)
 
 ---
 
