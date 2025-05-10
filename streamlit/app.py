@@ -33,8 +33,9 @@ def load_model():
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("enriched_data.csv")
-    vectors = np.load("embeddings.npy")
+    df = pd.read_csv("streamlit/enriched_data.csv")
+    vectors = np.load("streamlit/embeddings.npy")
+
     return df, vectors
 
 model = load_model()
