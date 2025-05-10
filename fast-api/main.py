@@ -10,7 +10,7 @@ app = FastAPI()
 # Load model and data once
 df = pd.read_csv("data/enriched_data.csv")
 embeddings = np.load("data/embeddings.npy")
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
 class RecommendationRequest(BaseModel):
     query: str
