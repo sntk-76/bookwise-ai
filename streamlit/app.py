@@ -30,10 +30,8 @@ def log_to_sheet(tab_name, row_data):
 # --------------------------
 @st.cache_resource
 def load_model():
-    model_path = os.path.join(os.path.dirname(__file__), "all-MiniLM-L6-v2")
-    print("✅ Model folder exists:", os.path.exists(model_path))
-    print("✅ config.json exists:", os.path.exists(os.path.join(model_path, "config.json")))
-    return SentenceTransformer(model_path)
+    return SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+
 
 @st.cache_data
 def load_data():
