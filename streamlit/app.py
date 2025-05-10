@@ -15,9 +15,8 @@ def get_gsheet_client():
         "https://spreadsheets.google.com/feeds",
         "https://www.googleapis.com/auth/drive"
     ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        "/home/sinatavakoli284/bookwise-ai/authentication/bookwise-ai-458509-014ab71d8d71.json", scope
-    )
+    creds_dict = dict(st.secrets["gcp"])  # Get credentials from Streamlit secrets
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
     return gspread.authorize(creds)
 
 def log_to_sheet(tab_name, row_data):
@@ -66,7 +65,7 @@ if st.button("Get Recommendations") and user_input:
 
             st.session_state.results = results
             st.session_state.query = user_input
-            st.session_state.logged_feedback = set()  # reset for each new query
+            st.session_state.logged_feedback = set()
 
     except Exception as e:
         st.error("Something went wrong. Please try again.")
@@ -102,7 +101,6 @@ if "results" in st.session_state:
                 index=None
             )
 
-            # Avoid duplicate logging
             feedback_key = f"{st.session_state.query}-{row['title']}"
             if feedback and feedback_key not in st.session_state.logged_feedback:
                 log_to_sheet("FeedbackLogs", [
