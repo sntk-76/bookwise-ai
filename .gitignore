@@ -178,6 +178,13 @@ cython_debug/
 
 # EXCEPTION: Keep this one CSV
 !streamlit/enriched_data.csv
+
+# Allow model folder and its .json files
+!streamlit/all-MiniLM-L6-v2/
+!streamlit/all-MiniLM-L6-v2/*.json
+!streamlit/all-MiniLM-L6-v2/*.txt
+!streamlit/all-MiniLM-L6-v2/*.safetensors
+
 # add terraform unnecessary file to the .gitignore :
 
 .terraform/
