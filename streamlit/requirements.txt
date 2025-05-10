@@ -1,7 +1,0 @@
-streamlit
-pandas
-numpy
-scikit-learn
-sentence-transformers
-gspread
-oauth2client

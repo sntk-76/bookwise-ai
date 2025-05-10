@@ -1,11 +1,9 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
 import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import requests
 
 # --------------------------
 # Google Sheets logging setup
@@ -25,21 +23,21 @@ def log_to_sheet(tab_name, row_data):
     sheet.append_row(row_data)
 
 # --------------------------
-# Load model and data
+# FastAPI request function
 # --------------------------
-@st.cache_resource
-def load_model():
-    return SentenceTransformer('streamlit/all-MiniLM-L6-v2')
+API_URL = "http://localhost:8000/recommend"  # Replace with Render URL after deployment
 
-@st.cache_data
-def load_data():
-    df = pd.read_csv("streamlit/enriched_data.csv")
-    vectors = np.load("streamlit/embeddings.npy")
-
-    return df, vectors
-
-model = load_model()
-df, book_vectors = load_data()
+def get_recommendations(query, top_n):
+    try:
+        response = requests.post(API_URL, json={"query": query, "top_n": top_n})
+        if response.status_code == 200:
+            return pd.DataFrame(response.json())
+        else:
+            st.error(f"API Error: {response.text}")
+            return pd.DataFrame()
+    except Exception as e:
+        st.error(f"Request failed: {e}")
+        return pd.DataFrame()
 
 # --------------------------
 # App UI
@@ -56,21 +54,13 @@ top_n = st.slider("How many recommendations?", 1, 10, 5)
 if st.button("Get Recommendations") and user_input:
     log_to_sheet("QueryLogs", [str(datetime.datetime.now()), user_input])
 
-    try:
-        with st.spinner("🔎 Finding the best book matches..."):
-            user_vec = model.encode([user_input])
-            scores = cosine_similarity(user_vec, book_vectors)[0]
-            top_indices = scores.argsort()[-top_n:][::-1]
-            results = df.iloc[top_indices].copy()
-            results["similarity"] = scores[top_indices]
+    with st.spinner("🔎 Finding the best book matches..."):
+        results = get_recommendations(user_input, top_n)
 
-            st.session_state.results = results
-            st.session_state.query = user_input
-            st.session_state.logged_feedback = set()
-
-    except Exception as e:
-        st.error("Something went wrong. Please try again.")
-        log_to_sheet("QueryLogs", [str(datetime.datetime.now()), f"ERROR: {str(e)}"])
+    if not results.empty:
+        st.session_state.results = results
+        st.session_state.query = user_input
+        st.session_state.logged_feedback = set()
 
 # --------------------------
 # Show Recommendations
