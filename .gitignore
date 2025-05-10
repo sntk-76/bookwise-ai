@@ -177,7 +177,7 @@ cython_debug/
 *.json
 
 # EXCEPTION: Keep this one CSV
-!fast-api/data/enriched_data.csv
+!streamlit/enriched_data.csv
 # add terraform unnecessary file to the .gitignore :
 
 .terraform/
