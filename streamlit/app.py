@@ -29,7 +29,7 @@ def log_to_sheet(tab_name, row_data):
 # --------------------------
 @st.cache_resource
 def load_model():
-    return SentenceTransformer('streamlit/all-MiniLM-L6-v2')
+    return SentenceTransformer('streamlit/all-MiniLM-L6-v2/')
 
 @st.cache_data
 def load_data():
