@@ -4,6 +4,26 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import datetime
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# --------------------------
+# Google Sheets logging setup
+# --------------------------
+def get_gsheet_client():
+    scope = [
+        "https://spreadsheets.google.com/feeds",
+        "https://www.googleapis.com/auth/drive"
+    ]
+    creds = ServiceAccountCredentials.from_json_keyfile_name(
+        "/home/sinatavakoli284/bookwise-ai/authentication/bookwise-ai-458509-014ab71d8d71.json", scope
+    )
+    return gspread.authorize(creds)
+
+def log_to_sheet(tab_name, row_data):
+    client = get_gsheet_client()
+    sheet = client.open_by_key("1JYzcT53ogOg7t4fhZJMZQ16QPcFgRvrQSWWHbQ5n5IQ").worksheet(tab_name)
+    sheet.append_row(row_data)
 
 # --------------------------
 # Load model and data
@@ -34,8 +54,7 @@ user_input = st.text_input("📝 What kind of book are you looking for?")
 top_n = st.slider("How many recommendations?", 1, 10, 5)
 
 if st.button("Get Recommendations") and user_input:
-    with open("query_log.txt", "a") as f:
-        f.write(f"{datetime.datetime.now()} | {user_input}\n")
+    log_to_sheet("QueryLogs", [str(datetime.datetime.now()), user_input])
 
     try:
         with st.spinner("🔎 Finding the best book matches..."):
@@ -45,23 +64,21 @@ if st.button("Get Recommendations") and user_input:
             results = df.iloc[top_indices].copy()
             results["similarity"] = scores[top_indices]
 
-            # Store in session state
             st.session_state.results = results
             st.session_state.query = user_input
+            st.session_state.logged_feedback = set()  # reset for each new query
 
     except Exception as e:
         st.error("Something went wrong. Please try again.")
-        with open("error_log.txt", "a") as f:
-            f.write(f"{datetime.datetime.now()} | ERROR: {str(e)}\n")
+        log_to_sheet("QueryLogs", [str(datetime.datetime.now()), f"ERROR: {str(e)}"])
 
 # --------------------------
-# Show Recommendations (from session)
+# Show Recommendations
 # --------------------------
 if "results" in st.session_state:
     st.success(f"Top {top_n} recommendations for you:")
 
     for i, row in st.session_state.results.iterrows():
-        # Use Streamlit columns for layout
         left_col, right_col = st.columns([1, 3])
 
         with left_col:
@@ -74,12 +91,10 @@ if "results" in st.session_state:
             st.markdown(f"**Similarity Score:** {row['similarity']:.2f}")
             st.markdown(f"{row['description'][:350]}...")
 
-            # External link to Google Books
             query_title = row['title'].replace(" ", "+")
             google_url = f"https://www.google.com/search?q={query_title}+book"
             st.markdown(f"[📖 More Info on Google](<{google_url}>)")
 
-            # Feedback immediately after book info
             feedback = st.radio(
                 f"Was this helpful?",
                 ["👍 Yes", "👎 No"],
@@ -87,12 +102,16 @@ if "results" in st.session_state:
                 index=None
             )
 
-            if feedback:
-                with open("feedback_log.txt", "a") as f:
-                    f.write(
-                        f"{datetime.datetime.now()} | {st.session_state.query} | "
-                        f"{row['title']} | {feedback}\n"
-                    )
+            # Avoid duplicate logging
+            feedback_key = f"{st.session_state.query}-{row['title']}"
+            if feedback and feedback_key not in st.session_state.logged_feedback:
+                log_to_sheet("FeedbackLogs", [
+                    str(datetime.datetime.now()),
+                    st.session_state.query,
+                    row['title'],
+                    feedback
+                ])
+                st.session_state.logged_feedback.add(feedback_key)
                 st.success("✅ Feedback recorded!")
 
         st.markdown("---")
