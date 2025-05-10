@@ -6,6 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import os
 
 # --------------------------
 # Google Sheets logging setup
@@ -29,7 +30,10 @@ def log_to_sheet(tab_name, row_data):
 # --------------------------
 @st.cache_resource
 def load_model():
-    return SentenceTransformer('streamlit/all-MiniLM-L6-v2/')
+    model_path = os.path.join(os.path.dirname(__file__), "all-MiniLM-L6-v2")
+    print("✅ Model folder exists:", os.path.exists(model_path))
+    print("✅ config.json exists:", os.path.exists(os.path.join(model_path, "config.json")))
+    return SentenceTransformer(model_path)
 
 @st.cache_data
 def load_data():
