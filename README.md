@@ -30,6 +30,7 @@ Access the deployed app: [Bookwise-AI on Streamlit Cloud](https://bookwise-ai-re
 - **Python** – Core programming language for all components.
 - **Pandas** – Data manipulation and analysis.
 - **NumPy** – Numerical computations.
+- **Apache Spark** – Distributed data processing for scalable transformations.
 - **Sentence-BERT (all-MiniLM-L6-v2)** – Semantic text embeddings for recommendation.
 
 ### 📈 Data Engineering & Orchestration
@@ -89,9 +90,8 @@ bookwise-ai/
 ├── data/                    # Cleaned and enriched datasets
 ├── infrastructure/          # Terraform files for infrastructure provisioning
 ├── notebooks/               # Jupyter notebooks for data exploration
-├── project-plan/            # Planning and documentation
 ├── streamlit/               # Streamlit app files
-│   ├── app.py               # Streamlit app entrypoint
+│   ├── app.py               # Streamlit app entry point
 │   ├── Dockerfile           # Optional Dockerfile for local deployment
 │   ├── requirements.txt     # Python dependencies
 │   ├── embeddings.npy       # Precomputed embeddings
