@@ -24,6 +24,27 @@ Access the deployed app: [Bookwise-AI on Streamlit Cloud](https://bookwise-ai-re
 
 ---
 
+## 🛠️ Technologies Used
+
+### 📊 Data Processing & Machine Learning
+- **Python** – Core programming language for all components.
+- **Pandas** – Data manipulation and analysis.
+- **NumPy** – Numerical computations.
+- **Sentence-BERT (all-MiniLM-L6-v2)** – Semantic text embeddings for recommendation.
+
+### 📈 Data Engineering & Orchestration
+- **Apache Airflow** – Workflow orchestration for automated data pipelines.
+- **Docker** – Containerization for local Airflow deployment and potential app deployment.
+
+### ☁️ Cloud & Infrastructure
+- **Google Cloud Platform (GCP)** – Used for storing enriched datasets and logging user feedback via Google Sheets.
+- **Terraform** – Infrastructure-as-Code for provisioning GCP resources.
+
+### 🌐 Frontend & App Interface
+- **Streamlit** – Interactive web app interface for user input, recommendations, and feedback.
+
+---
+
 ## System Overview
 
 ### 1. Data Pipeline
