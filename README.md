@@ -2,7 +2,7 @@
 
 **Bookwise-AI** is an end-to-end, intelligent book recommendation platform that leverages natural language understanding to deliver highly relevant suggestions. Users can simply describe the type of book they’re interested in using free-form, conversational language, and the system interprets this input using advanced Sentence-BERT embeddings to semantically match it with enriched book descriptions. The project combines a responsive and interactive frontend built with Streamlit, a robust data engineering workflow orchestrated through Apache Airflow, and scalable infrastructure management using Terraform, making it both modular and production-ready.
 
-![Project Cover](https://github.com/sntk-76/bookwise-ai/blob/main/Bookwise.png)
+![Project Cover](https://github.com/sntk-76/bookwise-ai/blob/main/Bookwise%20.png)
 
 ---
 
