@@ -1,8 +1,8 @@
-fastapi
-uvicorn
+streamlit
 sentence-transformers
 scikit-learn
 pandas
 numpy
 gspread
 oauth2client
+requests

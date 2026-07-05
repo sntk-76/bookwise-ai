@@ -178,6 +178,9 @@ cython_debug/
 
 # EXCEPTION: Keep this one CSV
 !streamlit/enriched_data.csv
+!streamlit/catalog_v2.csv
+!streamlit/catalog_v2_metadata.json
+!streamlit/embeddings_v2.npy
 
 # Allow model folder and its .json files
 !streamlit/all-MiniLM-L6-v2/
